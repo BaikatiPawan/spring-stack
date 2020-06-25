@@ -1,0 +1,25 @@
+ 
+image: "java:8-jdk"
+  
+ 
+maven-build:
+  image: "maven:3-jdk-8"
+  script: "mvn package -DskipTests"
+  stage: build
+  
+maven-test: 
+  image: "maven:3-jdk-8"
+  script: "mvn test"
+  stage: test
+
+services:
+ - mysql:latest
+
+variables: 
+  MYSQL_HOST: localhost
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_URL: "jdbc:mysql://localhost:3306/usttestdb?createDatabaseIfNotExist=true&user=root&password=root"
+
+stages: 
+  - build
+  - test
